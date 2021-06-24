@@ -1,0 +1,11 @@
+﻿<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link btn" href="@Url.Action("Index","ShoppingCart")" id="cart-status">
+            <i class="fa fa-shopping-cart">
+                <span class="badge badge-danger">@ViewData["CartCount"]</span>
+            </i>
+            Cart
+        </a>
+    </li>
+</ul>

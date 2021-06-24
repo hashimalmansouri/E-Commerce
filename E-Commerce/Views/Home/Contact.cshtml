@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2 class="marg_top">Get in Touch</h2>
+<hr />
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info marg_butt" role="alert">
+        @ViewBag.Message
+    </div>
+}
+else
+{
+    <form method="get" action="@Url.Action("Contact","Home", new { id = 1 })" class="marg_butt">
+        <input type="text" placeholder="Name" class="form-control" />
+        <br />
+        <input type="text" placeholder="Email" class="form-control" />
+        <br />
+        <textarea placeholder="Messgae" class="form-control"></textarea>
+        <br />
+        <input type="submit" class="btn btn-outline-primary" value="Send" />
+    </form>
+}

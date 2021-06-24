@@ -1,0 +1,138 @@
+﻿@model IEnumerable<E_Commerce.Models.ApplicationUser> 
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<h2 class="marg_top">Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-outline-primary"})
+</p>
+@using (Html.BeginForm("Index", "UserManager", FormMethod.Get))
+{
+    <div class="input-group marg_butt marg_top">
+        <input type="text" name="search" class="form-control" placeholder="Enter your keyword here" />
+        <button type="submit" class="btn btn-outline-primary col-1">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+}
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-info" role="alert">
+        Record is not found
+    </div>
+}
+else
+{
+    <table class="table table-responsive table-hover table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().EmailConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().PasswordHash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().SecurityStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().PhoneNumberConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().TwoFactorEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().LockoutEndDateUtc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().LockoutEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().AccessFailedCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().UserName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                </td>
+                <td class="">
+                    @Html.DisplayFor(modelItem => item.PasswordHash)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecurityStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success" })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+@if (((IPagedList)Model).PageCount > 0)
+{
+    <div class="marg_butt">
+        @{ var x = ((IPagedList)Model);}
+        Page @x.PageNumber of @x.PageCount
+
+        @Html.PagedListPager((IPagedList)Model, PageNo => Url.Action(("Index"),
+                 new { PageNo, search = Request.QueryString["search"] }),
+                 PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+}

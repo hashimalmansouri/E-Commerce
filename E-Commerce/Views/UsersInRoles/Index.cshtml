@@ -1,0 +1,52 @@
+﻿@model PagedList<E_Commerce.ViewModels.ListUsersInRolesViewModel>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<h2 class="marg_top">Index</h2>
+<table class="table table-bordered table-hover table-responsive d-sm-table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SingleOrDefault().Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SingleOrDefault().Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SingleOrDefault().RoleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SingleOrDefault().UserId)
+        </th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="marg_butt">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, pageNo => Url.Action("Index", "UsersInRoles",
+    new { pageNo }),
+    PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+
+

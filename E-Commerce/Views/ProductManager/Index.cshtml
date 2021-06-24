@@ -1,0 +1,104 @@
+﻿@model IEnumerable<E_Commerce.Models.Product>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<head>
+    <link href="~/Content/bootstrap-4.4.1.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<h2 class="marg_top">Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null,htmlAttributes: new { @class = "btn btn-outline-primary"})
+</p>
+@using (Html.BeginForm("Index", "ProductManager", FormMethod.Get))
+{
+    <div class="input-group marg_butt marg_top">
+        <input type="text" name="search" class="form-control" placeholder="Enter your keyword here" />
+        <button type="submit" class="btn btn-outline-primary col-1">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+}
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-info" role="alert">
+        Record is not found
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-responsive d-sm-table" @*id="product-table"*@>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Brand.BrandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Genre.GenreName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Quantity)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.BrandName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img src="~/Content/Images/Products/@Html.DisplayFor(modelItem => item.ImageUrl)" class="thumbnail" style="width:100px; height:75px" />
+                </td>
+                <td>
+                    @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(modelItem => item.Description).ToString()))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-outline-success"})
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+@if (((IPagedList)Model).PageCount > 0)
+{
+    <div class="marg_butt">
+        @{ var x = ((IPagedList)Model);}
+        Page @x.PageNumber of @x.PageCount
+
+        @Html.PagedListPager((IPagedList)Model, PageNo => Url.Action(("Index"),
+                 new { PageNo, search = Request.QueryString["search"] }),
+                 PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+}

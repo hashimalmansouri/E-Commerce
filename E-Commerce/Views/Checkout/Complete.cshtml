@@ -1,0 +1,13 @@
+﻿@model int
+@{
+    ViewBag.Title = "Checkout Complete";
+}
+<div class="alert alert-success marg_butt marg_top" role="alert">
+    <h4 class="alert-heading">Checkout Complete!</h4>
+    <p>Thanks for your order! Your order number is: @Model</p>
+    <hr>
+    <p class="mb-0">
+        How about shopping for some more products in our
+        @Html.ActionLink("website", "Index", "Home")
+    </p>
+</div>

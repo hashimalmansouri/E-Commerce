@@ -1,0 +1,82 @@
+﻿@model IEnumerable<E_Commerce.Models.SlideShow>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<h2 class="marg_top">Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, htmlAttributes: new { @class = "btn btn-outline-primary" })
+</p>
+@using (Html.BeginForm("Index", "SlideShowManager", FormMethod.Get))
+{
+    <div class="input-group marg_butt marg_top">
+        <input type="text" name="search" class="form-control" placeholder="Enter your keyword here" />
+        <button type="submit" class="btn btn-outline-primary col-1">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+}
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-info" role="alert">
+        Record is not found
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-responsive d-sm-table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().ImageAlt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SingleOrDefault().Caption)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <img src="~/Content/Images/SlideShows/@Html.DisplayFor(modelItem => item.ImageUrl)" class="thumbnail" style="width:100px; height:75px" />        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageAlt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Caption)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success"}) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+@if (((IPagedList)Model).PageCount > 0)
+{
+    <div class="marg_butt">
+            @{ var x = ((IPagedList)Model);}
+            Page @x.PageNumber of @x.PageCount
+
+        @Html.PagedListPager((IPagedList)Model, PageNo => Url.Action(("Index"),
+                 new { PageNo, search = Request.QueryString["search"] }),
+                 PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+}

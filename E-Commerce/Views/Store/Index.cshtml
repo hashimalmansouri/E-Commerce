@@ -1,0 +1,112 @@
+﻿@model IEnumerable<E_Commerce.Models.Product>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "All Products";
+}
+<head>
+    <link href="~/Content/bootstrap.4.1.2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-4.4.1.min.css" rel="stylesheet" />
+    <link href="~/Content/product.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+</head>
+<div class="super_container" style="color:black">
+    <div class="super_container_inner">
+        <div class="super_overlay"></div>
+        <!-- Home -->
+        <div style="width:auto;height:100px;background:#4a4a4a;padding-top:25px;">
+            <div class="text-center" style="font-size:30px;color:white;">
+                @if (ViewBag.Name != null)
+                {
+                    <text>All Products of </text> @ViewBag.Name
+                }
+                else
+                {
+                    <text>All Products</text>
+                }
+            </div>
+        </div>
+        
+        @using (Html.BeginForm("Index", "Store", FormMethod.Get))
+        {
+            <div class="input-group marg_butt marg_top">
+                <input type="text" name="search" class="form-control" placeholder="Enter your keyword here ( Search by Product Name, Genre Name or Brand Name )"/>
+                <button type="submit" class="btn btn-outline-primary col-1">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        }
+        @if (Model.Count() == 0)
+        {
+            <div class="alert alert-info" role="alert">
+                Record is not found
+            </div>
+        }
+        else
+        {
+            <!-- Products -->
+            <div class="container">
+                <div class="products">
+                    <div class="row products_row products_container grid">
+                        <!-- Product -->
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-xl-4 col-md-5 grid-item new">
+                                <div class="product">
+
+                                    <div class="product_image"><img src="~/Content/Images/Products/@item.ImageUrl" style="width:530px;height:450px" /></div>
+                                    <div class="product_content">
+                                        <div class="product_info d-flex flex-row align-items-start justify-content-start">
+                                            <div>
+                                                <div>
+                                                    <div class="product_name">
+                                                        <a href="@Url.Action("ProductDetails", "Store",new {id = item.ProductId})">
+                                                            @item.ProductName
+                                                        </a>
+                                                    </div>
+                                                    <!-- <div class="product_category">In <a href="category.html">Category</a></div> -->
+                                                </div>
+                                            </div>
+                                            <div class="ml-auto text-right">
+                                                <div class="product_price text-right">$@item.Price</div>
+                                            </div>
+                                        </div>
+                                        <div class="product_buttons">
+                                            <div class="text-right d-flex flex-row align-items-start justify-content-start">
+                                                <div class="text-center d-flex flex-column align-items-center justify-content-center">
+                                                    <!-- <div><div><img src="images/heart_2.svg" class="svg" alt=""><div>+</div></div></div> -->
+                                                    <div>Available Quantity : <span class="badge badge-light">@item.Quantity</span></div>
+                                                </div>
+                                                <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
+                                                    <div>
+                                                        <div>
+                                                            <a href="@Url.Action("AddToCart", "ShoppingCart", new { id = item.ProductId})">
+                                                                <img src="~/Content/Images/cart.svg" class="svg" alt="">
+                                                            </a>
+                                                            <div>+</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (((IPagedList)Model).PageCount > 0)
+{
+    <div style="color:black">
+        @{ var x = ((IPagedList)Model);}
+        Page @x.PageNumber of @x.PageCount
+
+        @Html.PagedListPager((IPagedList)Model, PageNo => Url.Action("Index","Store",
+                 new { PageNo, search = Request.QueryString["search"], brandId = ViewBag.BrandId, genreId = ViewBag.GenreId }),
+                 PagedListRenderOptions.OnlyShowFivePagesAtATime)
+    </div>
+}

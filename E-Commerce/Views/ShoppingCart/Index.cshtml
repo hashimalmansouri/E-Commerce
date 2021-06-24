@@ -1,0 +1,127 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@model E_Commerce.ViewModels.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap-4.4.1.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap-4.4.1.min.js"></script>
+<script src="~/Scripts/bootbox.min.js"></script>
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+
+        //$("#cart-table").dataTable();
+
+        $(".RemoveLink").click(
+            function () {
+                var recordToDelete = $(this).attr("data-id");
+                bootbox.confirm("Are you sure to delete ?",
+                function(result) {
+                if (result) {
+                if (recordToDelete != '') {
+                    // Perform the ajax post
+                    $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                        function (data) {
+                            // Successful requests get here
+                            // Update the page elements
+                            if (data.ItemCount == 0) {
+                                $('#row-' + data.DeleteId).fadeOut('slow');
+                            }
+                            else {
+                                $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                            }
+                            $('#update-message').show();
+                            $('#cart-total').text(data.CartTotal);
+                            $('#update-message').text(data.Message).fadeOut(5000);
+                            $('#cart-status').text(data.CartCount);
+                        });
+                }
+                }
+                 });
+            });
+    });
+    function handleUpdate() {
+        // Load and deserialize the returned JSON data
+        var json = context.get_data();
+        var data = Sys.Serialization.JavaScriptSerializer.deserialize(json);
+        // Update the page elements
+        if (data.ItemCount == 0) {
+            $('#row-' + data.DeleteId).fadeOut('slow');
+        } else {
+            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+        }
+        $('#cart-total').text(data.CartTotal);
+        $('#update-message').text(data.Message);
+        $('#cart-status').text('Cart (' + data.CartCount + ')');
+    }
+</script>
+<h3 class="marg_top">
+    Review your cart
+</h3>
+<p class="btn btn-outline-success">
+    <i class="fa fa-shopping-cart"></i>
+    @Html.ActionLink("Checkout", "AddressAndPayment",
+        "Checkout", null, new {@class = "btn"})
+</p>
+<table id ="cart-table" class="table table-bordered table-hover table-responsive d-sm-table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Price (each)
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+
+        if (Model.CartTotal == 0)
+        {
+            <tr class="alert alert-info" role="alert"><td>No items in your cart !</td><td></td><td></td><td></td></tr>
+        }
+        else
+        {
+            foreach (var item in Model.CartItems)
+            {
+                <tr id="row-@item.RecordId">
+                    <td>
+                        @Html.ActionLink(item.Product.ProductName, "ProductDetails", "Store", new { id = item.ProductId }, null)
+                    </td>
+                    <td>
+                        @item.Product.Price
+                    </td>
+                    <td id="item-count-@item.RecordId">
+                        @item.Count
+                    </td>
+                    <td>
+                        <a href="#" class="RemoveLink btn btn-outline-danger" data-id="@item.RecordId">Remove from cart</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    Total
+                </td>
+                <td></td>
+                <td></td>
+                <td id="cart-total">
+                    @Model.CartTotal
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+<div id="update-message" class="alert alert-danger" role="alert" style="display: none">
+</div>
+<p class="marg_butt">
+    @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-outline-dark" })
+</p>

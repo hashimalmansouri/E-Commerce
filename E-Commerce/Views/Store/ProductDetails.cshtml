@@ -1,0 +1,47 @@
+﻿@model E_Commerce.Models.Product
+@{
+    ViewBag.Title = "Product - " + Model.ProductName;
+}
+<head>
+    <link href="~/Content/bootstrap.4.1.2.css" rel="stylesheet" />
+    <link href="~/Content/product.css" rel="stylesheet" />
+</head>
+<div class="super_container" style="margin-top:30px">
+    <!-- Product -->
+    <div class="product">
+        <div class="container">
+            <div class="row">
+
+                <!-- Product Image -->
+                <div class="col-lg-6">
+                    <img src="~/Content/Images/Products/@Model.ImageUrl" style="width:300px;height:350px"/>
+                </div>
+
+                <!-- Product Info -->
+                <div class="col-lg-6 product_col table-responsive" style="height:350px">
+                    <div class="product_info">
+                        <div class="product_name" style="color:black;font-size:20px">@Model.ProductName</div>
+                        <div class="product_price" style="margin-bottom:10px">$@Model.Price</div>
+                        <div class="product_text" style="margin-bottom:10px">
+                            <div style="color:black;font-size:11px;">@Html.Raw(HttpUtility.HtmlDecode(Model.Description.ToString()))</div>
+                        </div>
+                        <div class="product_buttons">
+                            <div class="text-right d-flex flex-row align-items-start justify-content-start">
+                                <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
+                                    @*<div><div><img src="~/Content/Images/cart.svg" class="svg" alt=""><div>+</div></div></div>*@
+                                    <div style="color:black">Add to Cart</div>
+                                 </div>
+                                <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
+                                    <div><div>
+                                        <a href="@Url.Action("AddToCart", "ShoppingCart", new { id = Model.ProductId})">
+                                        <img src="~/Content/Images/cart.svg" class="svg" alt="">
+                                        </a><div>+</div></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

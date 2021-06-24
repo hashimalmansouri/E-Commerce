@@ -1,0 +1,74 @@
+﻿@model E_Commerce.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2 class="marg_top">Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand.BrandName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand.BrandName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre.GenreName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre.GenreName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            <img src="~/Content/Images/Products/@Html.DisplayFor(model => model.ImageUrl)" class="thumbnail" style="width:100px; height:75px" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.Description).ToString()))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+    </dl>
+</div>
+<p class="marg_butt">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-outline-success"}) |
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-outline-dark" })
+</p>
