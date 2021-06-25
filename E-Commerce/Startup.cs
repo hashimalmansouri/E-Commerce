@@ -9,7 +9,7 @@ namespace E_Commerce
 {
     public partial class Startup
     {
-        private Entities db = new Entities();
+        private ApplicationDbContext db = new ApplicationDbContext();
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
