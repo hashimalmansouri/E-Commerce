@@ -9,7 +9,7 @@ namespace E_Commerce.Models
 {
     public partial class ShoppingCart
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        Entities db = new Entities();
         string ShoppingCartId { get; set; }
         public const string CartSessionKey = "CartId";
         public static ShoppingCart GetCart(HttpContextBase context)

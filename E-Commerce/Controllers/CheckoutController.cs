@@ -10,7 +10,7 @@ namespace E_Commerce.Controllers
     [Authorize]
     public class CheckoutController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        Entities db = new Entities();
         const string PromoCode = "FREE";
         //
         // GET: /Checkout/AddressAndPayment

@@ -11,7 +11,7 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class StoreController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        Entities db = new Entities();
         public ActionResult Index(int? brandId, int? genreId, string search, int? pageNo)
         {
             var products = from p in db.Products select p;

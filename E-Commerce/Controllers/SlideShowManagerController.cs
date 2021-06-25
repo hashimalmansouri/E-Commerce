@@ -15,7 +15,7 @@ namespace E_Commerce.Controllers
     [Authorize(Roles = "Admin")]
     public class SlideShowManagerController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private Entities db = new Entities();
 
         // GET: SlideShowManager
         public ActionResult Index(string search, int? pageNo)

@@ -42,12 +42,5 @@ namespace E_Commerce.Models
             return new ApplicationDbContext();
         }
 
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<Brand> Brands { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<SlideShow> SlideShows { get; set; }
     }
 }

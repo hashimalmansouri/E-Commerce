@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,6 +61,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -191,114 +194,56 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911221747175_InitialCreate.cs" />
-    <Compile Include="Migrations\201911221747175_InitialCreate.Designer.cs">
-      <DependentUpon>201911221747175_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911221855557_change1.cs" />
-    <Compile Include="Migrations\201911221855557_change1.Designer.cs">
-      <DependentUpon>201911221855557_change1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911221907574_change2.cs" />
-    <Compile Include="Migrations\201911221907574_change2.Designer.cs">
-      <DependentUpon>201911221907574_change2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911281112332_changeDataAnnotations.cs" />
-    <Compile Include="Migrations\201911281112332_changeDataAnnotations.Designer.cs">
-      <DependentUpon>201911281112332_changeDataAnnotations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911281155514_ch3.cs" />
-    <Compile Include="Migrations\201911281155514_ch3.Designer.cs">
-      <DependentUpon>201911281155514_ch3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911290542180_ch31.cs" />
-    <Compile Include="Migrations\201911290542180_ch31.Designer.cs">
-      <DependentUpon>201911290542180_ch31.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041318303_ch32.cs" />
-    <Compile Include="Migrations\201912041318303_ch32.Designer.cs">
-      <DependentUpon>201912041318303_ch32.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041401524_ch5.cs" />
-    <Compile Include="Migrations\201912041401524_ch5.Designer.cs">
-      <DependentUpon>201912041401524_ch5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041407210_ch7.cs" />
-    <Compile Include="Migrations\201912041407210_ch7.Designer.cs">
-      <DependentUpon>201912041407210_ch7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041408328_ch8.cs" />
-    <Compile Include="Migrations\201912041408328_ch8.Designer.cs">
-      <DependentUpon>201912041408328_ch8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041414576_ch9.cs" />
-    <Compile Include="Migrations\201912041414576_ch9.Designer.cs">
-      <DependentUpon>201912041414576_ch9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041441084_ch91.cs" />
-    <Compile Include="Migrations\201912041441084_ch91.Designer.cs">
-      <DependentUpon>201912041441084_ch91.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041455501_ch10.cs" />
-    <Compile Include="Migrations\201912041455501_ch10.Designer.cs">
-      <DependentUpon>201912041455501_ch10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041459037_ch11.cs" />
-    <Compile Include="Migrations\201912041459037_ch11.Designer.cs">
-      <DependentUpon>201912041459037_ch11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041505026_ch12.cs" />
-    <Compile Include="Migrations\201912041505026_ch12.Designer.cs">
-      <DependentUpon>201912041505026_ch12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912041558017_ch13.cs" />
-    <Compile Include="Migrations\201912041558017_ch13.Designer.cs">
-      <DependentUpon>201912041558017_ch13.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912050419256_ch.cs" />
-    <Compile Include="Migrations\201912050419256_ch.Designer.cs">
-      <DependentUpon>201912050419256_ch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912050557452_ch1.cs" />
-    <Compile Include="Migrations\201912050557452_ch1.Designer.cs">
-      <DependentUpon>201912050557452_ch1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912050656280_ch2.cs" />
-    <Compile Include="Migrations\201912050656280_ch2.Designer.cs">
-      <DependentUpon>201912050656280_ch2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912051647028_ch4.cs" />
-    <Compile Include="Migrations\201912051647028_ch4.Designer.cs">
-      <DependentUpon>201912051647028_ch4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912060752245_changeDateTime.cs" />
-    <Compile Include="Migrations\201912060752245_changeDateTime.Designer.cs">
-      <DependentUpon>201912060752245_changeDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912091949055_addPropToUsersTB.cs" />
-    <Compile Include="Migrations\201912091949055_addPropToUsersTB.Designer.cs">
-      <DependentUpon>201912091949055_addPropToUsersTB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912092009349_deletePropToUsersTB.cs" />
-    <Compile Include="Migrations\201912092009349_deletePropToUsersTB.Designer.cs">
-      <DependentUpon>201912092009349_deletePropToUsersTB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912100703383_changeProp2.cs" />
-    <Compile Include="Migrations\201912100703383_changeProp2.Designer.cs">
-      <DependentUpon>201912100703383_changeProp2.cs</DependentUpon>
+    <Compile Include="Migrations\202106251941422_CreateIdentityTBs.cs" />
+    <Compile Include="Migrations\202106251941422_CreateIdentityTBs.Designer.cs">
+      <DependentUpon>202106251941422_CreateIdentityTBs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Brand.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cart.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECommerceDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ECommerceDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECommerceDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ECommerceDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ECommerceDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Genre.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Metadata\Brand.cs" />
+    <Compile Include="Models\Metadata\Genre.cs" />
+    <Compile Include="Models\Metadata\Order.cs" />
+    <Compile Include="Models\Metadata\Product.cs" />
+    <Compile Include="Models\Metadata\SlideShow.cs" />
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SlideShow.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AccountViewModels.cs" />
-    <Compile Include="Models\Brand.cs" />
-    <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\SlideShow.cs" />
     <Compile Include="ViewModels\ListUsersInRolesViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -343,6 +288,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\ECommerceDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ECommerceDB.edmx</DependentUpon>
+      <LastGenOutput>ECommerceDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ECommerceDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ECommerceDB.edmx</DependentUpon>
+      <LastGenOutput>ECommerceDB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
@@ -353,6 +308,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <EntityDeploy Include="Models\ECommerceDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ECommerceDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ECommerceDB.edmx.diagram">
+      <DependentUpon>ECommerceDB.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\HEAR.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-3.3.6.min.js" />
@@ -458,77 +420,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911221747175_InitialCreate.resx">
-      <DependentUpon>201911221747175_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911221855557_change1.resx">
-      <DependentUpon>201911221855557_change1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911221907574_change2.resx">
-      <DependentUpon>201911221907574_change2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911281112332_changeDataAnnotations.resx">
-      <DependentUpon>201911281112332_changeDataAnnotations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911281155514_ch3.resx">
-      <DependentUpon>201911281155514_ch3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911290542180_ch31.resx">
-      <DependentUpon>201911290542180_ch31.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041318303_ch32.resx">
-      <DependentUpon>201912041318303_ch32.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041401524_ch5.resx">
-      <DependentUpon>201912041401524_ch5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041407210_ch7.resx">
-      <DependentUpon>201912041407210_ch7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041408328_ch8.resx">
-      <DependentUpon>201912041408328_ch8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041414576_ch9.resx">
-      <DependentUpon>201912041414576_ch9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041441084_ch91.resx">
-      <DependentUpon>201912041441084_ch91.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041455501_ch10.resx">
-      <DependentUpon>201912041455501_ch10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041459037_ch11.resx">
-      <DependentUpon>201912041459037_ch11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041505026_ch12.resx">
-      <DependentUpon>201912041505026_ch12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041558017_ch13.resx">
-      <DependentUpon>201912041558017_ch13.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912050419256_ch.resx">
-      <DependentUpon>201912050419256_ch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912050557452_ch1.resx">
-      <DependentUpon>201912050557452_ch1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912050656280_ch2.resx">
-      <DependentUpon>201912050656280_ch2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912051647028_ch4.resx">
-      <DependentUpon>201912051647028_ch4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912060752245_changeDateTime.resx">
-      <DependentUpon>201912060752245_changeDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912091949055_addPropToUsersTB.resx">
-      <DependentUpon>201912091949055_addPropToUsersTB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912092009349_deletePropToUsersTB.resx">
-      <DependentUpon>201912092009349_deletePropToUsersTB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912100703383_changeProp2.resx">
-      <DependentUpon>201912100703383_changeProp2.cs</DependentUpon>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202106251941422_CreateIdentityTBs.resx">
+      <DependentUpon>202106251941422_CreateIdentityTBs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

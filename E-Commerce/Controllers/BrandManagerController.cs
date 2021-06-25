@@ -14,7 +14,7 @@ namespace E_Commerce.Controllers
     [Authorize(Roles = "Admin")]
     public class BrandManagerController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private Entities db = new Entities();
 
         // GET: BrandManager
         public ActionResult Index(string search, int? pageNo)

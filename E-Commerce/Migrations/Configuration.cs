@@ -10,7 +10,6 @@ namespace E_Commerce.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "E_Commerce.Models.ApplicationDbContext";
         }
 
         protected override void Seed(E_Commerce.Models.ApplicationDbContext context)

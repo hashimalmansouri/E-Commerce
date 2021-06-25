@@ -17,6 +17,7 @@ namespace E_Commerce.Controllers
     public class AccountController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 

@@ -13,7 +13,7 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class ShoppingCartController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        Entities db = new Entities();
         //
         // GET: /ShoppingCart/
         public ActionResult Index()

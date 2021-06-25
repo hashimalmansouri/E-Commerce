@@ -12,7 +12,7 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        Entities db = new Entities();
         public ActionResult Index(string search, int? pageNo)
         {
             IQueryable<Product> products = db.Products
