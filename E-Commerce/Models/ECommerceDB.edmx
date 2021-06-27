@@ -4,7 +4,22 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="E_Commerce.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adverts">
+          <Key>
+            <PropertyRef Name="AdvertId" />
+          </Key>
+          <Property Name="AdvertId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdvertName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ImageUrl" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="TempQuantity" Type="int" Nullable="false" />
+          <Property Name="BrandId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
         <EntityType Name="Brands">
           <Key>
             <PropertyRef Name="BrandId" />
@@ -18,7 +33,7 @@
           </Key>
           <Property Name="RecordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CartId" Type="nvarchar(max)" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="AdvertId" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
@@ -35,7 +50,7 @@
           </Key>
           <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="AdvertId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
@@ -57,21 +72,6 @@
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="Products">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ImageUrl" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
-          <Property Name="TempQuantity" Type="int" Nullable="false" />
-          <Property Name="BrandId" Type="int" Nullable="false" />
-          <Property Name="GenreId" Type="int" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" />
-        </EntityType>
         <EntityType Name="SlideShows">
           <Key>
             <PropertyRef Name="Id" />
@@ -82,17 +82,59 @@
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Caption" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK_dbo_Carts_dbo_Products_ProductId">
-          <End Role="Products" Type="Self.Products" Multiplicity="1">
+        <Association Name="FK_dbo_Adverts_dbo_Brands_BrandId">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Adverts" Type="Self.Adverts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandId" />
+            </Principal>
+            <Dependent Role="Adverts">
+              <PropertyRef Name="BrandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Adverts_dbo_Genres_GenreId">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Adverts" Type="Self.Adverts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="GenreId" />
+            </Principal>
+            <Dependent Role="Adverts">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Carts_dbo_Adverts_AdvertId">
+          <End Role="Adverts" Type="Self.Adverts" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
+            <Principal Role="Adverts">
+              <PropertyRef Name="AdvertId" />
             </Principal>
             <Dependent Role="Carts">
-              <PropertyRef Name="ProductId" />
+              <PropertyRef Name="AdvertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetails_dbo_Adverts_AdvertId">
+          <End Role="Adverts" Type="Self.Adverts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adverts">
+              <PropertyRef Name="AdvertId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="AdvertId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -110,89 +152,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_OrderDetails_dbo_Products_ProductId">
-          <End Role="Products" Type="Self.Products" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Products_dbo_Brands_BrandId">
-          <End Role="Brands" Type="Self.Brands" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brands">
-              <PropertyRef Name="BrandId" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="BrandId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Products_dbo_Genres_GenreId">
-          <End Role="Genres" Type="Self.Genres" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Genres">
-              <PropertyRef Name="GenreId" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="GenreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="ModelStoreContainer">
+        <EntityContainer Name="E_CommerceModelsStoreContainer">
+          <EntitySet Name="Adverts" EntityType="Self.Adverts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SlideShows" EntityType="Self.SlideShows" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_dbo_Carts_dbo_Products_ProductId" Association="Self.FK_dbo_Carts_dbo_Products_ProductId">
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_dbo_Adverts_dbo_Brands_BrandId" Association="Self.FK_dbo_Adverts_dbo_Brands_BrandId">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Adverts" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Adverts_dbo_Genres_GenreId" Association="Self.FK_dbo_Adverts_dbo_Genres_GenreId">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Adverts" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Carts_dbo_Adverts_AdvertId" Association="Self.FK_dbo_Carts_dbo_Adverts_AdvertId">
+            <End Role="Adverts" EntitySet="Adverts" />
             <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Adverts_AdvertId" Association="Self.FK_dbo_OrderDetails_dbo_Adverts_AdvertId">
+            <End Role="Adverts" EntitySet="Adverts" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderId" Association="Self.FK_dbo_OrderDetails_dbo_Orders_OrderId">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductId" Association="Self.FK_dbo_OrderDetails_dbo_Products_ProductId">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Products_dbo_Brands_BrandId" Association="Self.FK_dbo_Products_dbo_Brands_BrandId">
-            <End Role="Brands" EntitySet="Brands" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Products_dbo_Genres_GenreId" Association="Self.FK_dbo_Products_dbo_Genres_GenreId">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="E_Commerce.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Advert">
+          <Key>
+            <PropertyRef Name="AdvertId" />
+          </Key>
+          <Property Name="AdvertId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdvertName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="TempQuantity" Type="Int32" Nullable="false" />
+          <Property Name="BrandId" Type="Int32" Nullable="false" />
+          <Property Name="GenreId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_dbo_Adverts_dbo_Brands_BrandId" FromRole="Adverts" ToRole="Brands" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_dbo_Adverts_dbo_Genres_GenreId" FromRole="Adverts" ToRole="Genres" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK_dbo_Carts_dbo_Adverts_AdvertId" FromRole="Adverts" ToRole="Carts" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetails_dbo_Adverts_AdvertId" FromRole="Adverts" ToRole="OrderDetails" />
+        </EntityType>
         <EntityType Name="Brand">
           <Key>
             <PropertyRef Name="BrandId" />
           </Key>
           <Property Name="BrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BrandName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Brands_BrandId" FromRole="Brands" ToRole="Products" />
+          <NavigationProperty Name="Adverts" Relationship="Self.FK_dbo_Adverts_dbo_Brands_BrandId" FromRole="Brands" ToRole="Adverts" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -200,10 +219,10 @@
           </Key>
           <Property Name="RecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="AdvertId" Type="Int32" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_Carts_dbo_Products_ProductId" FromRole="Carts" ToRole="Products" />
+          <NavigationProperty Name="Advert" Relationship="Self.FK_dbo_Carts_dbo_Adverts_AdvertId" FromRole="Carts" ToRole="Adverts" />
         </EntityType>
         <EntityType Name="Genre">
           <Key>
@@ -211,7 +230,7 @@
           </Key>
           <Property Name="GenreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GenreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_Genres_GenreId" FromRole="Genres" ToRole="Products" />
+          <NavigationProperty Name="Adverts" Relationship="Self.FK_dbo_Adverts_dbo_Genres_GenreId" FromRole="Genres" ToRole="Adverts" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -219,11 +238,11 @@
           </Key>
           <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="AdvertId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Advert" Relationship="Self.FK_dbo_OrderDetails_dbo_Adverts_AdvertId" FromRole="OrderDetails" ToRole="Adverts" />
           <NavigationProperty Name="Order" Relationship="Self.FK_dbo_OrderDetails_dbo_Orders_OrderId" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_OrderDetails_dbo_Products_ProductId" FromRole="OrderDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -244,25 +263,6 @@
           <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetails_dbo_Orders_OrderId" FromRole="Orders" ToRole="OrderDetails" />
         </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ImageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="TempQuantity" Type="Int32" Nullable="false" />
-          <Property Name="BrandId" Type="Int32" Nullable="false" />
-          <Property Name="GenreId" Type="Int32" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Brand" Relationship="Self.FK_dbo_Products_dbo_Brands_BrandId" FromRole="Products" ToRole="Brands" />
-          <NavigationProperty Name="Carts" Relationship="Self.FK_dbo_Carts_dbo_Products_ProductId" FromRole="Products" ToRole="Carts" />
-          <NavigationProperty Name="Genre" Relationship="Self.FK_dbo_Products_dbo_Genres_GenreId" FromRole="Products" ToRole="Genres" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_dbo_OrderDetails_dbo_Products_ProductId" FromRole="Products" ToRole="OrderDetails" />
-        </EntityType>
         <EntityType Name="SlideShow">
           <Key>
             <PropertyRef Name="Id" />
@@ -273,45 +273,59 @@
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Caption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_dbo_Products_dbo_Brands_BrandId">
+        <Association Name="FK_dbo_Adverts_dbo_Brands_BrandId">
           <End Role="Brands" Type="Self.Brand" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <End Role="Adverts" Type="Self.Advert" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Brands">
               <PropertyRef Name="BrandId" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Adverts">
               <PropertyRef Name="BrandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Carts_dbo_Products_ProductId">
-          <End Role="Products" Type="Self.Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Carts" Type="Self.Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="Carts">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Products_dbo_Genres_GenreId">
+        <Association Name="FK_dbo_Adverts_dbo_Genres_GenreId">
           <End Role="Genres" Type="Self.Genre" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <End Role="Adverts" Type="Self.Advert" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genres">
               <PropertyRef Name="GenreId" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Adverts">
               <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Carts_dbo_Adverts_AdvertId">
+          <End Role="Adverts" Type="Self.Advert" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Carts" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adverts">
+              <PropertyRef Name="AdvertId" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="AdvertId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_OrderDetails_dbo_Adverts_AdvertId">
+          <End Role="Adverts" Type="Self.Advert" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adverts">
+              <PropertyRef Name="AdvertId" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="AdvertId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -329,46 +343,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_OrderDetails_dbo_Products_ProductId">
-          <End Role="Products" Type="Self.Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="OrderDetails">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ECommerceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adverts" EntityType="Self.Advert" />
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Carts" EntityType="Self.Cart" />
           <EntitySet Name="Genres" EntityType="Self.Genre" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="SlideShows" EntityType="Self.SlideShow" />
-          <AssociationSet Name="FK_dbo_Products_dbo_Brands_BrandId" Association="Self.FK_dbo_Products_dbo_Brands_BrandId">
+          <AssociationSet Name="FK_dbo_Adverts_dbo_Brands_BrandId" Association="Self.FK_dbo_Adverts_dbo_Brands_BrandId">
             <End Role="Brands" EntitySet="Brands" />
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Adverts" EntitySet="Adverts" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Carts_dbo_Products_ProductId" Association="Self.FK_dbo_Carts_dbo_Products_ProductId">
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_dbo_Adverts_dbo_Genres_GenreId" Association="Self.FK_dbo_Adverts_dbo_Genres_GenreId">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Adverts" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Carts_dbo_Adverts_AdvertId" Association="Self.FK_dbo_Carts_dbo_Adverts_AdvertId">
+            <End Role="Adverts" EntitySet="Adverts" />
             <End Role="Carts" EntitySet="Carts" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Products_dbo_Genres_GenreId" Association="Self.FK_dbo_Products_dbo_Genres_GenreId">
-            <End Role="Genres" EntitySet="Genres" />
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Adverts_AdvertId" Association="Self.FK_dbo_OrderDetails_dbo_Adverts_AdvertId">
+            <End Role="Adverts" EntitySet="Adverts" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_OrderDetails_dbo_Orders_OrderId" Association="Self.FK_dbo_OrderDetails_dbo_Orders_OrderId">
             <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_OrderDetails_dbo_Products_ProductId" Association="Self.FK_dbo_OrderDetails_dbo_Products_ProductId">
-            <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
         </EntityContainer>
@@ -377,9 +377,25 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="E_CommerceModelsStoreContainer" CdmEntityContainer="ECommerceEntities">
+          <EntitySetMapping Name="Adverts">
+            <EntityTypeMapping TypeName="E_Commerce.Models.Advert">
+              <MappingFragment StoreEntitySet="Adverts">
+                <ScalarProperty Name="AdvertId" ColumnName="AdvertId" />
+                <ScalarProperty Name="AdvertName" ColumnName="AdvertName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TempQuantity" ColumnName="TempQuantity" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Brands">
-            <EntityTypeMapping TypeName="Model.Brand">
+            <EntityTypeMapping TypeName="E_Commerce.Models.Brand">
               <MappingFragment StoreEntitySet="Brands">
                 <ScalarProperty Name="BrandId" ColumnName="BrandId" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
@@ -387,18 +403,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="Model.Cart">
+            <EntityTypeMapping TypeName="E_Commerce.Models.Cart">
               <MappingFragment StoreEntitySet="Carts">
                 <ScalarProperty Name="RecordId" ColumnName="RecordId" />
                 <ScalarProperty Name="CartId" ColumnName="CartId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="AdvertId" ColumnName="AdvertId" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genres">
-            <EntityTypeMapping TypeName="Model.Genre">
+            <EntityTypeMapping TypeName="E_Commerce.Models.Genre">
               <MappingFragment StoreEntitySet="Genres">
                 <ScalarProperty Name="GenreId" ColumnName="GenreId" />
                 <ScalarProperty Name="GenreName" ColumnName="GenreName" />
@@ -406,18 +422,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="Model.OrderDetail">
+            <EntityTypeMapping TypeName="E_Commerce.Models.OrderDetail">
               <MappingFragment StoreEntitySet="OrderDetails">
                 <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="AdvertId" ColumnName="AdvertId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="Model.Order">
+            <EntityTypeMapping TypeName="E_Commerce.Models.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
@@ -435,24 +451,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="Model.Product">
-              <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TempQuantity" ColumnName="TempQuantity" />
-                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SlideShows">
-            <EntityTypeMapping TypeName="Model.SlideShow">
+            <EntityTypeMapping TypeName="E_Commerce.Models.SlideShow">
               <MappingFragment StoreEntitySet="SlideShows">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />

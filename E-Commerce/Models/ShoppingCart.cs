@@ -9,7 +9,7 @@ namespace E_Commerce.Models
 {
     public partial class ShoppingCart
     {
-        Entities db = new Entities();
+        ECommerceEntities db = new ECommerceEntities();
         string ShoppingCartId { get; set; }
         public const string CartSessionKey = "CartId";
         public static ShoppingCart GetCart(HttpContextBase context)
@@ -23,18 +23,18 @@ namespace E_Commerce.Models
         {
             return GetCart(controller.HttpContext);
         }
-        public void AddToCart(Product product)
+        public void AddToCart(Advert advert)
         {
-            // Get the matching cart and product instances
+            // Get the matching cart and Advert instances
             var cartItem = db.Carts.SingleOrDefault(
                 c => c.CartId == ShoppingCartId
-                     && c.ProductId == product.ProductId);
+                     && c.AdvertId == advert.AdvertId);
             if (cartItem == null)
             {
                 // Create a new cart item if no cart item exists
                 cartItem = new Cart
                 {
-                    ProductId = product.ProductId,
+                    AdvertId = advert.AdvertId,
                     CartId = ShoppingCartId,
                     Count = 1,
                     DateCreated = DateTime.Now
@@ -68,10 +68,10 @@ namespace E_Commerce.Models
                     db.Carts.Remove(cartItem);
                 }
 
-                var a = db.Carts.Single(b => b.RecordId == id).ProductId;
-                var product = db.Products.Find(a);
-                product.TempQuantity += 1;
-                db.Entry(product).State = EntityState.Modified;
+                var a = db.Carts.Single(b => b.RecordId == id).AdvertId;
+                var Advert = db.Adverts.Find(a);
+                Advert.TempQuantity += 1;
+                db.Entry(Advert).State = EntityState.Modified;
                 //db.SaveChanges();
 
                 // Save changes
@@ -104,12 +104,12 @@ namespace E_Commerce.Models
         }
         public decimal GetTotal()
         {
-            // Multiply product price by count of that album to get
-            // the current price for each of those products in the cart
-            // sum all product price totals to get the cart total
+            // Multiply Advert price by count of that album to get
+            // the current price for each of those Adverts in the cart
+            // sum all Advert price totals to get the cart total
             decimal? total = (from cartItems in db.Carts
                               where cartItems.CartId == ShoppingCartId
-                              select (int?)cartItems.Count * cartItems.Product.Price).Sum();
+                              select (int?)cartItems.Count * cartItems.Advert.Price).Sum();
             return total ?? decimal.Zero;
         }
         public int CreateOrder(Order order)
@@ -121,19 +121,19 @@ namespace E_Commerce.Models
             {
                 var orderDetail = new OrderDetail
                 {
-                    ProductId = item.ProductId,
+                    AdvertId = item.AdvertId,
                     OrderId = order.OrderId,
-                    UnitPrice = item.Product.Price,
+                    UnitPrice = item.Advert.Price,
                     Quantity = item.Count
                 };
                 // Set the order total of the shopping cart
-                orderTotal += (item.Count * item.Product.Price);
+                orderTotal += (item.Count * item.Advert.Price);
                 db.OrderDetails.Add(orderDetail);
 
 
                 //////////////////////////////////////////////
-                item.Product.Quantity = item.Product.Quantity - item.Count;
-                item.Product.TempQuantity = item.Product.Quantity;
+                item.Advert.Quantity = item.Advert.Quantity - item.Count;
+                item.Advert.TempQuantity = item.Advert.Quantity;
                 db.Entry(item).State = EntityState.Modified;
                 ///////////////////////////////////////////////
             }

@@ -12,14 +12,14 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        Entities db = new Entities();
+        ECommerceEntities db = new ECommerceEntities();
         public ActionResult Index(string search, int? pageNo)
         {
-            IQueryable<Product> products = db.Products
+            IQueryable<Advert> products = db.Adverts
                 .OrderByDescending(a => a.DateCreated);
             if (!String.IsNullOrEmpty(search))
             {
-                products = products.Where(p => p.ProductName.Contains(search) ||
+                products = products.Where(p => p.AdvertName.Contains(search) ||
                                           p.Brand.BrandName.Contains(search) ||
                                           p.Genre.GenreName.Contains(search));
             }

@@ -12,17 +12,17 @@ namespace E_Commerce.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Advert
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Advert()
         {
             this.Carts = new HashSet<Cart>();
             this.OrderDetails = new HashSet<OrderDetail>();
         }
     
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
+        public int AdvertId { get; set; }
+        public string AdvertName { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
@@ -33,9 +33,9 @@ namespace E_Commerce.Models
         public Nullable<System.DateTime> DateCreated { get; set; }
     
         public virtual Brand Brand { get; set; }
+        public virtual Genre Genre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
-        public virtual Genre Genre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

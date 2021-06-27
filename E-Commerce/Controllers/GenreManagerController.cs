@@ -14,7 +14,7 @@ namespace E_Commerce.Controllers
     [Authorize(Roles = "Admin")]
     public class GenreManagerController : Controller
     {
-        private Entities db = new Entities();
+        private ECommerceEntities db = new ECommerceEntities();
 
         // GET: GenreManager
         public ActionResult Index(string search, int? pageNo)

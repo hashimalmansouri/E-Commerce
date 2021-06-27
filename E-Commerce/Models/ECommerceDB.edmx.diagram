@@ -4,19 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="55fb624f7d9a45ca934c75d1a5b42394" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.Brand" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Cart" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Genre" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.OrderDetail" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Order" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Product" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.SlideShow" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
-        <AssociationConnector Association="Model.FK_dbo_Products_dbo_Brands_BrandId" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_Carts_dbo_Products_ProductId" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_Products_dbo_Genres_GenreId" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_OrderDetails_dbo_Orders_OrderId" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_dbo_OrderDetails_dbo_Products_ProductId" ManuallyRouted="false" />
+      <Diagram DiagramId="2234224bf6c549e0821cbdf07598e778" Name="Diagram1">
+        <EntityTypeShape EntityType="E_Commerce.Models.Advert" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.Brand" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.Cart" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.Genre" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.OrderDetail" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.Order" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="E_Commerce.Models.SlideShow" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="E_Commerce.Models.FK_dbo_Adverts_dbo_Brands_BrandId" ManuallyRouted="false" />
+        <AssociationConnector Association="E_Commerce.Models.FK_dbo_Adverts_dbo_Genres_GenreId" ManuallyRouted="false" />
+        <AssociationConnector Association="E_Commerce.Models.FK_dbo_Carts_dbo_Adverts_AdvertId" ManuallyRouted="false" />
+        <AssociationConnector Association="E_Commerce.Models.FK_dbo_OrderDetails_dbo_Adverts_AdvertId" ManuallyRouted="false" />
+        <AssociationConnector Association="E_Commerce.Models.FK_dbo_OrderDetails_dbo_Orders_OrderId" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

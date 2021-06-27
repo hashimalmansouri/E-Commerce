@@ -11,10 +11,10 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class StoreController : Controller
     {
-        Entities db = new Entities();
+        ECommerceEntities db = new ECommerceEntities();
         public ActionResult Index(int? brandId, int? genreId, string search, int? pageNo)
         {
-            var products = from p in db.Products select p;
+            var products = from p in db.Adverts select p;
             if (brandId != null)
             {
                 products = products.Where(b => b.BrandId == brandId);
@@ -29,16 +29,16 @@ namespace E_Commerce.Controllers
             }
             if (!String.IsNullOrEmpty(search))
             {
-                products = products.Where(p => p.ProductName.Contains(search) ||
+                products = products.Where(p => p.AdvertName.Contains(search) ||
                                           p.Brand.BrandName.Contains(search) ||
                                           p.Genre.GenreName.Contains(search));
             }
-            products = products.OrderByDescending(p => p.ProductId);
+            products = products.OrderByDescending(p => p.AdvertId);
             return View(products.ToPagedList(pageNo ?? 1, 6));
         }
         public ActionResult ProductDetails(int? id)
         {
-            var product = db.Products.Find(id);
+            var product = db.Adverts.Find(id);
             return View(product);
         }
         [ChildActionOnly]

@@ -186,7 +186,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SlideShowManagerController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="Controllers\ProductManagerController.cs" />
+    <Compile Include="Controllers\AdvertManagerController.cs" />
     <Compile Include="Controllers\RoleManagerController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\UserManagerController.cs" />
@@ -199,6 +199,9 @@
       <DependentUpon>202106251941422_CreateIdentityTBs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Advert.cs">
+      <DependentUpon>ECommerceDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Brand.cs">
       <DependentUpon>ECommerceDB.tt</DependentUpon>
     </Compile>
@@ -226,15 +229,12 @@
     <Compile Include="Models\Metadata\Brand.cs" />
     <Compile Include="Models\Metadata\Genre.cs" />
     <Compile Include="Models\Metadata\Order.cs" />
-    <Compile Include="Models\Metadata\Product.cs" />
+    <Compile Include="Models\Metadata\Advert.cs" />
     <Compile Include="Models\Metadata\SlideShow.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>ECommerceDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderDetail.cs">
-      <DependentUpon>ECommerceDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Product.cs">
       <DependentUpon>ECommerceDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SlideShow.cs">
@@ -288,6 +288,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\DB_Script.sql" />
     <Content Include="Models\ECommerceDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ECommerceDB.edmx</DependentUpon>

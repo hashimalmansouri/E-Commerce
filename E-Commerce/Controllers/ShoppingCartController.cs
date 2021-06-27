@@ -13,7 +13,7 @@ namespace E_Commerce.Controllers
     [AllowAnonymous]
     public class ShoppingCartController : Controller
     {
-        Entities db = new Entities();
+        ECommerceEntities db = new ECommerceEntities();
         //
         // GET: /ShoppingCart/
         public ActionResult Index()
@@ -32,19 +32,19 @@ namespace E_Commerce.Controllers
         // GET: /Store/AddToCart/5
         public ActionResult AddToCart(int id)
         {
-            // Retrieve the Product from the database
-            var addedProduct = db.Products
-                .Single(p => p.ProductId == id);
+            // Retrieve the Advert from the database
+            var addedAdvert = db.Adverts
+                .Single(p => p.AdvertId == id);
 
 
-            if (addedProduct.Quantity > 0 && addedProduct.TempQuantity > 0 && (addedProduct.TempQuantity <= addedProduct.Quantity))
+            if (addedAdvert.Quantity > 0 && addedAdvert.TempQuantity > 0 && (addedAdvert.TempQuantity <= addedAdvert.Quantity))
             {
                 // Add it to the shopping cart
                 var cart = ShoppingCart.GetCart(this.HttpContext);
-                cart.AddToCart(addedProduct);
+                cart.AddToCart(addedAdvert);
                 //////////////////////////////////
-                addedProduct.TempQuantity -= 1;
-                db.Entry(addedProduct).State = EntityState.Modified;
+                addedAdvert.TempQuantity -= 1;
+                db.Entry(addedAdvert).State = EntityState.Modified;
                 db.SaveChanges();
                 //////////////////////////////////
             }
@@ -63,15 +63,15 @@ namespace E_Commerce.Controllers
         {
             // Remove the item from the cart
             var cart = ShoppingCart.GetCart(this.HttpContext);
-            // Get the name of the product to display confirmation
-            string productName = db.Carts
-                .Single(item => item.RecordId == id).Product.ProductName;
+            // Get the name of the Advert to display confirmation
+            string AdvertName = db.Carts
+                .Single(item => item.RecordId == id).Advert.AdvertName;
             // Remove from cart
             int itemCount = cart.RemoveFromCart(id);
             // Display the confirmation message
             var results = new ShoppingCartRemoveViewModel
             {
-                Message = Server.HtmlEncode(productName) +
+                Message = Server.HtmlEncode(AdvertName) +
                           " has been removed from your shopping cart.",
                 CartTotal = cart.GetTotal(),
                 CartCount = cart.GetCount(),

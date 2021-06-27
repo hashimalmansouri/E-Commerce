@@ -17,13 +17,13 @@ namespace E_Commerce.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Genre()
         {
-            this.Products = new HashSet<Product>();
+            this.Adverts = new HashSet<Advert>();
         }
     
         public int GenreId { get; set; }
         public string GenreName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Advert> Adverts { get; set; }
     }
 }

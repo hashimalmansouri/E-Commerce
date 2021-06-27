@@ -13,10 +13,10 @@ namespace E_Commerce.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class ECommerceEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public ECommerceEntities()
+            : base("name=ECommerceEntities")
         {
         }
     
@@ -25,12 +25,12 @@ namespace E_Commerce.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Advert> Adverts { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<SlideShow> SlideShows { get; set; }
     }
 }
